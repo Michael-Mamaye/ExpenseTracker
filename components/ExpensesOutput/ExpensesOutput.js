@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         backgroundColor: GlobalStyles.colors.primary700,
     },
     infoText: {
-        color: 'white',
+        color: GlobalStyles.colors.primary200,
         fontSize: 16,
         textAlign: 'center',
         marginTop: 32,

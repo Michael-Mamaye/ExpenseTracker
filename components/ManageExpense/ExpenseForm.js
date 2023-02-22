@@ -5,7 +5,6 @@ import Input from './Input';
 import Button from '../UI/Button';
 import { getFormattedDate } from '../../util/date';
 import { GlobalStyles } from '../../constants/styles';
-import DatePicker from 'react-native-datepicker';
 
 function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   const [inputs, setInputs] = useState({
@@ -133,6 +132,7 @@ const styles = StyleSheet.create({
     color: 'white',
     marginVertical: 24,
     textAlign: 'center',
+    color: GlobalStyles.colors.primary200
   },
   inputsRow: {
     flexDirection: 'row',
