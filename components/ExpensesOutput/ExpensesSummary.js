@@ -25,10 +25,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        elevation: 5,
+        shadowColor: GlobalStyles.colors.primary200,
+        shadowOffset: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 10,
     },
     period: {
-        fontSize: 12,
+        fontSize: 16,
         color: GlobalStyles.colors.primary400,
+        fontWeight: '900'
     },
     sum: {
         fontSize: 16,
