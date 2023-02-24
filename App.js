@@ -12,7 +12,9 @@ import IconButton from './components/UI/IconButton';
 import ExpensesContextProvider, { ExpensesContext } from './store/expenses-context';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -113,12 +115,27 @@ export default function App() {
   }
 
   const authCtx = useContext(ExpensesContext)
+  const [isTryingLogin, setIsTryingLogin] = useState(true)
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const tk = AsyncStorage.getItem('token')
+      if (tk) {
+        authCtx.authenticate(tk)
+      }
+      setIsTryingLogin(false)
+    }
+    fetchToken()
+  }, [])
 
   return <>
     <StatusBar style="light" />
     <ExpensesContextProvider>
       <NavigationContainer>
-        {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+        {
+          isTryingLogin ? <AppLoading /> :
+            authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />
+        }
       </NavigationContainer>
     </ExpensesContextProvider>
   </>

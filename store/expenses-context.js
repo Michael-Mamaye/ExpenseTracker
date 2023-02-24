@@ -1,4 +1,5 @@
-import { createContext, useReducer, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const ExpensesContext = createContext({
   expenses: [],
@@ -58,9 +59,11 @@ function ExpensesContextProvider({ children }) {
 
   function authenticate(token) {
     setAuthToken(token)
+    AsyncStorage.setItem('token', token)
   }
   function logout() {
     setAuthToken(null)
+    AsyncStorage.removeItem('token')
   }
 
   const value = {
