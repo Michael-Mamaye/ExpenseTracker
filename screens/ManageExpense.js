@@ -31,7 +31,7 @@ function ManageExpense({ route, navigation }) {
   async function deleteExpenseHandler() {
     setIsSubmitting(true);
     try {
-      await deleteExpense(editedExpenseId);
+      await deleteExpense(editedExpenseId, expensesCtx.token);
       expensesCtx.deleteExpense(editedExpenseId);
       navigation.goBack();
     } catch (error) {
@@ -48,10 +48,10 @@ function ManageExpense({ route, navigation }) {
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        expensesCtx.updateExpense(editedExpenseId, expenseData);
-        await updateExpense(editedExpenseId, expenseData);
+        expensesCtx.updateExpense(editedExpenseId, expenseData,);
+        await updateExpense(editedExpenseId, expenseData, expensesCtx.token);
       } else {
-        const id = await storeExpense(expenseData);
+        const id = await storeExpense(expenseData, expensesCtx.token);
         expensesCtx.addExpense({ ...expenseData, id: id });
       }
       navigation.goBack();

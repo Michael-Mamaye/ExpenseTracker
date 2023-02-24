@@ -17,7 +17,7 @@ function RecentExpenses() {
         async function getExpenses() {
             setIsFetching(true);
             try {
-                const expenses = await fetchExpenses();
+                const expenses = await fetchExpenses(expensesCtx.token);
                 expensesCtx.setExpenses(expenses);
             } catch (error) {
                 console.log(error)

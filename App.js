@@ -9,9 +9,10 @@ import RecentExpenses from './screens/RecentExpenses';
 import AllExpenses from './screens/AllExpenses';
 import { GlobalStyles } from './constants/styles';
 import IconButton from './components/UI/IconButton';
-import ExpensesContextProvider from './store/expenses-context';
+import ExpensesContextProvider, { ExpensesContext } from './store/expenses-context';
 import LoginScreen from './screens/auth/LoginScreen';
 import SignupScreen from './screens/auth/SignupScreen';
+import { useContext } from 'react';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -80,6 +81,7 @@ export default function App() {
       </BottomTabs.Navigator>
     );
   }
+
   const AuthenticatedStack = () => {
     return (
 
@@ -87,6 +89,7 @@ export default function App() {
         screenOptions={{
           headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
           headerTintColor: 'white',
+
         }}
       >
         <Stack.Screen
@@ -99,6 +102,9 @@ export default function App() {
           component={ManageExpense}
           options={{
             presentation: 'modal',
+            headerRight: ({ tintColor }) => (
+              <IconButton icon='exit' color={tintColor} size={24} onPress={authCtx.logout} />
+            )
           }}
         />
       </Stack.Navigator>
@@ -106,11 +112,13 @@ export default function App() {
     );
   }
 
+  const authCtx = useContext(ExpensesContext)
+
   return <>
     <StatusBar style="light" />
     <ExpensesContextProvider>
       <NavigationContainer>
-        <AuthStack />
+        {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
       </NavigationContainer>
     </ExpensesContextProvider>
   </>
